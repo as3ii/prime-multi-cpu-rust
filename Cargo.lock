@@ -1,0 +1,4 @@
+[[package]]
+name = "prime-multi-cpu-rust"
+version = "0.1.0"
+
