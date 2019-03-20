@@ -5,3 +5,27 @@ authors = ["Lorenzo Debertolis <as3ii777@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+
+[profile.dev]
+opt-level = 0
+debug = true
+lto = false
+codegen-units = 16
+
+[profile.release]
+opt-level = 3
+debug = false
+lto = true
+panic = 'abort'
+
+[profile.test]
+opt-level = 3
+debug = true
+lto = false
+codegen-units = 16
+
+[profile.bench]
+opt-level = 3
+debug = false
+lto = true
+

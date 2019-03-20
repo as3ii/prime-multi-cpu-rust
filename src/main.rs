@@ -14,7 +14,7 @@ fn main() -> std::io::Result<()> {
         stdin()
             .read_line(&mut response)
             .expect("Failed to read line");
-        let len = response.trim_right().len();
+        let len = response.trim_end().len();
         response.truncate(len);
         match response.parse::<u128>() {
             Err(err) => panic!("Give only unsigned integer as argumnt; Error: {:?}", err),
@@ -44,7 +44,7 @@ fn main() -> std::io::Result<()> {
     stdin()
         .read_line(&mut response)
         .expect("Failed to read line");
-    let len = response.trim_right().len();
+    let len = response.trim_end().len();
     response.truncate(len);
     if response == "y" {
         lib::print_vec(&results);
