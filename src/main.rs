@@ -2,12 +2,18 @@ mod lib;
 use std::env;
 use std::io::{stdin, stdout, Write};
 //use std::sync::{Arc, RwLock};
+use std::error::Error;
 use std::time::Instant;
 
-fn main() -> std::io::Result<()> {
+fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
     let max: u128;
-    if args.len() != 2 {
+    if args.len() == 2 {
+        match args[1].parse::<u128>() {
+            Err(err) => panic!("Give only unsigned integer as argumnt; Error: {:?}", err),
+            Ok(n) => max = n as u128,
+        }
+    } else {
         let mut response = String::new();
         print!("Write max result: ");
         stdout().flush()?;
@@ -17,11 +23,6 @@ fn main() -> std::io::Result<()> {
         let len = response.trim_end().len();
         response.truncate(len);
         match response.parse::<u128>() {
-            Err(err) => panic!("Give only unsigned integer as argumnt; Error: {:?}", err),
-            Ok(n) => max = n as u128,
-        }
-    } else {
-        match args[1].parse::<u128>() {
             Err(err) => panic!("Give only unsigned integer as argumnt; Error: {:?}", err),
             Ok(n) => max = n as u128,
         }

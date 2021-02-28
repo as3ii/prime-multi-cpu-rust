@@ -8,6 +8,11 @@ fn is_prime(n: u128) -> bool {
         2 | 3 => res = true,
         _ if n % 2 == 0 => res = false,
         _ => {
+            #[allow(
+                clippy::cast_sign_loss,
+                clippy::cast_precision_loss,
+                clippy::cast_possible_truncation
+            )]
             let sqrtn: u128 = ((n as f64).sqrt() as u128) + 1;
             let mut i: u128 = 3;
             while (i <= sqrtn) && res {
@@ -40,12 +45,13 @@ pub fn calc_prime(stop: u128, num_thread: usize, array: &mut Vec<u128>) {
                         var += 1;
                     }
                     matrix.lock().unwrap().push(array_in);
-                    match thread::current().name() {
-                        Some(x) => String::from(x),
-                        None => format!("{:?}", thread::current().id()),
+                    if let Some(x) = thread::current().name() {
+                        String::from(x)
+                    } else {
+                        format!("{:?}", thread::current().id())
                     }
                 })
-                .unwrap_or_else(|_| panic!("failed spawning thread n°{}", num)),
+                .unwrap_or_else(|_| panic!("failed spawning thread n\u{b0}{}", num)),
         );
     }
 
